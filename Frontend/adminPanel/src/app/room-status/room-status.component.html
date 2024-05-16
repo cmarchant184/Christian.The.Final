@@ -1,0 +1,13 @@
+<div class="room-status-container">
+  <h2>Room Status</h2>
+  
+  <div class="room-list">
+    <div class="room" *ngFor="let room of roomStatuses">
+      <div class="room-name">{{ room.name }}</div>
+      <div class="room-status" [ngClass]="{ 'booked': room.status === 'Booked', 'available': room.status === 'Available' }">
+        {{ room.status }}
+      </div>
+    </div>
+  </div>
+</div>
+  

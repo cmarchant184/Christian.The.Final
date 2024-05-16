@@ -1,0 +1,31 @@
+<div class="AddClassroom">
+    <h2>Add Classroom</h2>
+    <form (ngSubmit)="addClassroom(classroomForm.value)" #classroomForm="ngForm">
+      <div class="form-group">
+        <label for="classroomName">Classroom Name:</label>
+        <input type="text" id="classroomName" name="classroomName" ngModel required>
+      </div>
+      <button type="submit">Add Classroom</button>
+    </form>
+  
+    <h2>Bookings</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Room Purpose</th>
+          <th>Renter Name</th>
+          <th>Booking Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings">
+          <td>{{ booking.roomPurpose }}</td>
+          <td>{{ booking.renterName }}</td>
+          <td>{{ booking.bookingDate }}</td>
+          <td><button (click)="deleteBooking(booking.id)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,0 +1,35 @@
+.room-status-container {
+    padding: 20px;
+  }
+  
+  .room-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .room {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .room-name {
+    font-weight: bold;
+  }
+  
+  .room-status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .booked {
+    background-color: #FF6347; 
+  }
+  
+  .available {
+    background-color: #32CD32; 
+  }
+  
