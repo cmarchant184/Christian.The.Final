@@ -47,8 +47,8 @@ struct ContentView: View {
             // Check-in date picker
             if isBookingDatePickerVisible {
                 DatePicker("", selection: $bookingDate, displayedComponents: [.date, .hourAndMinute])
-                .datePickerStyle(WheelDatePickerStyle())
-                .padding()
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .padding()
             }
             
             // Button to select check-out date
@@ -62,14 +62,13 @@ struct ContentView: View {
             // Check-out date picker
             if isCheckoutDatePickerVisible {
                 DatePicker("", selection: $checkoutDate, displayedComponents: [.date, .hourAndMinute])
-                .datePickerStyle(WheelDatePickerStyle())
-                .padding()
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .padding()
             }
             
             // Add a button to submit the booking
             Button(action: {
-                // Implement booking submission logic
-                // You can handle booking submission here
+                bookRoom()
             }) {
                 Text("Book Room")
                     .padding()
@@ -83,11 +82,39 @@ struct ContentView: View {
         }
         .padding()
     }
-}
+    func bookRoom() {
+        guard let url = URL(string: "http://localhost:3030/bookings") else {
+            print("Invalid URL")
+            return
+        }
+        let body: [String: Any] = [
+            "roomPurpose": roomPurpose,
+            "renterName": renterName,
+            "bookingDate": bookingDate.timeIntervalSince1970,
+            "checkoutDate": checkoutDate.timeIntervalSince1970
+            
+        ]
+        
+        var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = try? JSONSerialization.data(withJSONObject: body)
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .previewLayout(.sizeThatFits)
+                URLSession.shared.dataTask(with: request) { data, response, error in
+                    if let data = data {
+                        if let stringData = String(data: data, encoding: .utf8) {
+                            print(stringData)
+                        }
+                    } else if let error = error {
+                        print("Error: \(error.localizedDescription)")
+                    }
+                }.resume()
+            }
+        }
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+                .previewLayout(.sizeThatFits)
+        }
     }
-}
+
